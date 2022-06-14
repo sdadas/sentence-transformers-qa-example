@@ -66,6 +66,3 @@ if __name__ == '__main__':
             exit(0)
         answer = qa.generate_answer(question.strip())
         print(f"A: {answer}")
-    # Boli mnie głowa i nie mogę spać, chociaż dokoła wszyscy już posnęli.
-    # Mam schizofrenię, zaburzenia emocjonalne proszę puść to na antenie.
-    # Tak mnie to boli, że Rychu Peja może dziś uczciwie zarobić.
