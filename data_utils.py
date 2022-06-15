@@ -28,10 +28,10 @@ class DatasetReader:
         random.shuffle(results)
         return results
 
-    def get_question_answer_pairs(self, split: str="train") -> Iterable[Tuple]:
+    def get_question_answer_pairs(self, split: str="train", first_answer_only: bool=False) -> Iterable[Tuple]:
         data = self.train if split == "train" else self.eval
         for item in data:
-            for pair in self._get_question_answers(item):
+            for pair in self._get_question_answers(item, first_answer_only):
                 yield pair
 
     def get_answers(self, split: str="train") -> Iterable[str]:
@@ -40,7 +40,7 @@ class DatasetReader:
             for pair in self._get_question_answers(item):
                 yield pair[1]
 
-    def _get_question_answers(self, item: Dict) -> Iterable[Tuple]:
+    def _get_question_answers(self, item: Dict, first_answer_only: bool=False) -> Iterable[Tuple]:
         title = item.get("title").strip()
         if not title[-1] in ".?!": title += "?"
         text = item.get("text")
@@ -51,3 +51,5 @@ class DatasetReader:
             answer_text = answer.get("text")
             if len(answer_text) < 5: continue
             yield (question_text, answer_text)
+            if first_answer_only:
+                return
